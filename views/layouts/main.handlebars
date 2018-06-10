@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>News</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body>
+
+	<header>
+		<nav class="nav fixed-top bg-danger" id="nav-bar">
+		  <a class="nav-link" href="/">Home</a>
+		  <a class="nav-link" href="/saved">Saved Articles</a>
+		  <a class="btn btn-warning" id="srape-new">Scrape New Articles</a>
+		</nav>
+
+	<div class="jumbotron jumbotron-fluid">
+	  <div class="container">
+	    <h1 class="display-3">News Scraper</h1>
+	    <p class="lead">Scrape articles. Save articles. Note articles.</p>
+	  </div>
+	</div>
+
+	</header>
+
+	<div class="container">
+		<div id="articles">
+
+			{{{body}}}
+
+		</div>
+	</div>
+
+	<footer>
+		
+	</footer>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
