@@ -1,0 +1,27 @@
+body {
+	padding-top: 40px;
+}
+
+.nav {
+	margin: 0px;
+    padding: 10px;
+}
+
+.card {
+	margin-bottom: 20px;
+}
+
+.notes-btn {
+	margin: 2px;
+}
+
+
+a.nav-link,
+a.nav-link:hover {
+	color: white;
+}
+ 
+a.title-link {
+	text-decoration: none;
+	color: black;
+}
