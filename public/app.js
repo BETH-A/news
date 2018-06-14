@@ -1,5 +1,6 @@
 $(document).ready(function(){
-    $("#srape-new").on("click", function(){
+    $("#scrape-new").on("click", function(){
+      console.log("clicked");
       $.ajax({
         method: "GET",
         url: "/scrape"
