@@ -39,11 +39,12 @@ mongoose.connect("mongodb://heroku_707rpb17:jqidj7k2b6nhjonu00jube4bu0@ds151840.
 
 // A GET route for scraping 
 app.get("/scrape", function (req, res) {
+    console.log("clicked")
     var count = 0;
     // First, we grab the body of the html with request
-    request.get("http://www.bbc.com/news").then(function (error, response, html) {
+    request("http://www.bbc.com/news",function (error, response, html) {
     if (!error && response.statusCode == 200) {
-        var $ = cheerio.load(response.data);
+        var $ = cheerio.load(html);
         var results = [];
         $("gs-c-promo-body").each(function (i, element) {
             // var result = {}
@@ -63,7 +64,7 @@ app.get("/scrape", function (req, res) {
 
 
         // Add articles to DB
-        db.Article.create(result)
+        db.Article.create(results)
             .then(function (dbArticle) {
                 console.log("Articles");
                 res.send(dbArticle);
