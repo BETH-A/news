@@ -5,7 +5,6 @@ var mongoose = require("mongoose");
 var request = require("request");
 
 // Scraping tools
-var axios = require("axios");
 var cheerio = require("cheerio");
 
 // Require models
@@ -42,7 +41,7 @@ mongoose.connect("mongodb://heroku_707rpb17:jqidj7k2b6nhjonu00jube4bu0@ds151840.
 app.get("/scrape", function (req, res) {
     var count = 0;
     // First, we grab the body of the html with request
-    axios.get("http://www.bbc.com/news").then(function (error, response, html) {
+    request.get("http://www.bbc.com/news").then(function (error, response, html) {
     if (!error && response.statusCode == 200) {
         var $ = cheerio.load(response.data);
         var results = [];
