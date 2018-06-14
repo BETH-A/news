@@ -1,5 +1,9 @@
 body {
 	padding-top: 40px;
+	background-image: url(./images/digial.jpg);
+	background-size: cover;
+	background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 .nav {
@@ -7,8 +11,20 @@ body {
     padding: 10px;
 }
 
+#header {
+	padding: 30px;
+	height: 200px;
+	text-align: center;
+
+}
+
 .card {
 	margin-bottom: 20px;
+	opacity: 0.8;
+    filter: alpha(opacity=50);
+    /* For IE */
+    -moz-opacity: 0.5;
+    /* For Firefox < 5.0 */
 }
 
 .notes-btn {
