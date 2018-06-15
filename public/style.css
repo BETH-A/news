@@ -22,6 +22,7 @@ body {
 .card {
 	margin-bottom: 20px;
 	background-color: #900000;
+	color: white;
 	opacity: 0.8;
     filter: alpha(opacity=50);
     /* For IE */

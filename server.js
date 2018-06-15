@@ -49,15 +49,14 @@ app.get("/scrape", function (req, res) {
             $("div.media__content").each(function (i, element) {
                 // var result = {}
                 var title = $(element).children("h3").children("a").text();
-                var body = $(element).children("p").text();
                 var link = "https://www.bbc.com/" + $(element).children("h3").children("a").attr("href");
-
+                var summary = $(element).children("p").text().trim();
                 results.push({
                     title: title,
-                    body: body,
-                    link: link
+                    link: link,
+                    summary: summary
                 });
-                console.log(results);
+                // console.log(results);
             });
 
 
