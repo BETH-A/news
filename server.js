@@ -42,104 +42,127 @@ app.get("/scrape", function (req, res) {
     console.log("clicked")
     var count = 0;
     // First, we grab the body of the html with request
-    request("http://www.bbc.com/news",function (error, response, html) {
-    if (!error && response.statusCode == 200) {
-        var $ = cheerio.load(html);
-        var results = [];
-        $("gs-c-promo-body").each(function (i, element) {
-            // var result = {}
-                console.log(element);
-            var title = $(element).children("a").children("h3").text();
-            var body = $(element).children("a").children("p").text();
-            var link = "https://www.bbc.com/news" + $(element).children("a").attr("href");
-        
-            results.push({
-                title: title,
-                body: body,
-                link: link
+    request("http://www.bbc.com/", function (error, response, html) {
+        if (!error && response.statusCode == 200) {
+            var $ = cheerio.load(html);
+            var results = [];
+            $("div.media__content").each(function (i, element) {
+                // var result = {}
+                var title = $(element).children("h3").children("a").text();
+                var body = $(element).children("p").text();
+                var link = "https://www.bbc.com/" + $(element).children("h3").children("a").attr("href");
+
+                results.push({
+                    title: title,
+                    body: body,
+                    link: link
+                });
+                console.log(results);
             });
-            console.log(results);
-        });
 
 
 
-        // Add articles to DB
-        db.Article.create(results)
-            .then(function (dbArticle) {
-                console.log("Articles");
-                res.send(dbArticle);
-            })
-            .catch(function (err) {
-                res.json(err);
-            });
-        res.send("Scrape Complete");
-    }});
+            // Add articles to DB
+            db.Article.create(results)
+                .then(function (dbArticle) {
+                    console.log("Articles");
+                    res.send(dbArticle);
+                })
+                .catch(function (err) {
+                    res.json(err);
+                });
+            // res.send("Scrape Complete");
+        }
+    });
 });
 
 //Routes for pages
-app.get("/", function(req,res){
+app.get("/", function (req, res) {
     console.log("GET /");
     db.Article
-    .find({})
-    .then(function(dbArticle){
-        res.render("index", {article: dbArticle});
-    })
-    .catch(function(err){
-        res.json(err);
-    });
+        .find({})
+        .then(function (dbArticle) {
+            res.render("index", {
+                article: dbArticle
+            });
+        })
+        .catch(function (err) {
+            res.json(err);
+        });
 });
 
 //Route for Saved Articles
-app.get("/saved", function(req,res){
+app.get("/saved", function (req, res) {
     console.log("GET /");
     db.Article
-    .find({saved:true})
-    .then(function(dbArticle){
-        res.render("saved", {article: dbArticle});
-    })
-    .catch(function(err){
-        res.json(err);
-    });
+        .find({
+            saved: true
+        })
+        .then(function (dbArticle) {
+            res.render("saved", {
+                article: dbArticle
+            });
+        })
+        .catch(function (err) {
+            res.json(err);
+        });
 });
 
 //Route of an Article by id w/ note
-app.get("/article/:id", function(req,res){
-    console.log("GET notes for " +req.params.id);
+app.get("/article/:id", function (req, res) {
+    console.log("GET notes for " + req.params.id);
     db.Article
-    .findOne({_id: req.params.id})
-    .populate("note")
-    .then(function(dbArticle){
-        console.log("article found" + req.params.id)
-        res.json(dbArticle)
-    })
-    .catch(function(err){
-        res.json(err);
-    });
+        .findOne({
+            _id: req.params.id
+        })
+        .populate("note")
+        .then(function (dbArticle) {
+            console.log("article found" + req.params.id)
+            res.json(dbArticle)
+        })
+        .catch(function (err) {
+            res.json(err);
+        });
 });
 
 //Route for updating status
-app.put("/articles/:id/:boolean", function(req,res){
+app.put("/articles/:id/:boolean", function (req, res) {
     console.log("updated")
 
-    db.Article.findOneAndUpdate({_id:params.id},{saved: req.params.boolean}, {new: true}).then(function(dbArticle) {
-        console.log("added");
-        res.json(dbArticle);
-    })
-    .catch(function(err){
-        res.json(err);
-    });
+    db.Article.findOneAndUpdate({
+            _id: params.id
+        }, {
+            saved: req.params.boolean
+        }, {
+            new: true
+        }).then(function (dbArticle) {
+            console.log("added");
+            res.json(dbArticle);
+        })
+        .catch(function (err) {
+            res.json(err);
+        });
 })
 
 
-app.post("/article/:id", function(req,res){
-    db.Note.create(req.body).then(function(dbNote) {return db.Article.findOneAndUpdate({_id: req.params.id}, {$push: {note:dbNote_id}},{new: true});
-})
-.then(function(dbArticle){
-    res.json(dbArticle);
-})
-.catch(function(err){
-    res.json(err);
-});
+app.post("/article/:id", function (req, res) {
+    db.Note.create(req.body).then(function (dbNote) {
+            return db.Article.findOneAndUpdate({
+                _id: req.params.id
+            }, {
+                $push: {
+                    note: dbNote_id
+                }
+            }, {
+                new: true
+            });
+        })
+        .then(function (dbArticle) {
+            res.json(dbArticle);
+        })
+        .catch(function (err) {
+            res.json(err);
+        });
 });
 
 // Start the server
